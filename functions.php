@@ -19,7 +19,12 @@ function tambah($data) {
     $nim = htmlspecialchars($data["nim"]);
     $email = htmlspecialchars($data["email"]);
     $jurusan = htmlspecialchars($data["jurusan"]);
-    $gambar = htmlspecialchars($data["gambar"]);
+
+    // upload gambar
+    $gambar = upload();
+    if( !$gambar ) {
+        return false;
+    }
 
     $query = "INSERT INTO test
             VALUES 
@@ -31,6 +36,51 @@ function tambah($data) {
 }
 
 
+function upload() {
+    $namaFile = $_FILES['gambar']['name'];
+    $ukuranFile = $_FILES['gambar']['size'];
+    $error = $_FILES['gambar']['error'];
+    $tmpName = $_FILES['gambar']['tmp_name'];
+
+    // cek apakah tidak ada gambar yang diupload
+    if( $error === 4 ) {
+        echo "<script>
+                alert('pilih gmabar terlebih dahulu!');
+              </script>";
+        return false;
+    }
+
+    // cek file extension
+    $ekstensiGambarValid = ['jpg', 'jpeg', 'png'];
+    $ekstensiGambar = explode('.', $namaFile);
+    $ekstensiGambar = strtolower(end($ekstensiGambar));
+    if( !in_array($ekstensiGambar, $ekstensiGambarValid)) {
+        echo "<script>
+                alert('format invalid!');
+              </script>";
+        return false;
+    }
+
+    // cek jika ukurannya terlalu besar
+    if( $ukuranFile > 1000000 )  {
+        echo "<script>
+                alert('ukuran gambar terlalu besar!');
+              </script>";
+        return false;
+    }
+
+    // lolos pengecekan, gambar siap upload
+    // generate nama gambar baru
+    $namaFileBaru = uniqid();
+    $namaFileBaru .= '.';
+    $namaFileBaru .= $ekstensiGambar;
+
+    move_uploaded_file($tmpName, 'img/' . $namaFileBaru);
+
+    return $namaFile;
+}
+
+
 function hapus($id) {
     global $db;
     mysqli_query($db, "DELETE FROM test WHERE id = $id");
@@ -38,6 +88,8 @@ function hapus($id) {
     return mysqli_affected_rows($db);
 }
 
+
+// function ubah
 function ubah($data) {
     global $db;
     $id = $data["id"];
@@ -45,7 +97,14 @@ function ubah($data) {
     $nim = htmlspecialchars($data["nim"]);
     $email = htmlspecialchars($data["email"]);
     $jurusan = htmlspecialchars($data["jurusan"]);
-    $gambar = htmlspecialchars($data["gambar"]);
+    $gambarLama = htmlspecialchars($data["gambarLama"]);
+
+    // cek apakah user pilih gambar baru atau tidak
+    if( $_FILES['gambar']['error'] === 4 ){
+        $gambar = $gambarLama;
+    }else {
+        $gambar = upload();
+    }
 
     $query = "UPDATE test SET
                 nama = '$nama',
