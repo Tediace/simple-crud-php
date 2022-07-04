@@ -1,8 +1,8 @@
 # simple-crud-php
 Simple CRUD in php
 
-##Home
-![home](https://iili.io/jRDNqJ.png)
+## Home
+![home](https://freeimage.host/i/home.jRDO0v)
 
-##Add
-![add] https://freeimage.host/i/jRDO0v
+## Add
+![add](https://iili.io/jRDNqJ.png)
