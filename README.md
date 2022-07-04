@@ -6,7 +6,7 @@ Simple CRUD (create read update delete) in php
 DBMS and Programming language
 
 *   **PHP 7.4 or higher** 
-*   **XAMPP** 
+*   **XAMPP (Windows), MAMP (Macos) and LAMP (Linux)** 
 *   **MySQL**
 *   **Apache** 
 
