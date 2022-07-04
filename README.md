@@ -2,7 +2,7 @@
 Simple CRUD in php
 
 ##Home
-https://freeimage.host/i/jRDNqJ
+![home] https://freeimage.host/i/jRDNqJ
 
 ##Add
-https://freeimage.host/i/jRDO0v
+![add] https://freeimage.host/i/jRDO0v
